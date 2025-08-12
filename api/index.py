@@ -43,38 +43,38 @@ response = responses[0]
 # Current values. The order of variables needs to be the same as requested.
 current = response.Current()
 
-current_temperature_2m = current.Variables(0).Value()
+current_temperature_2m = current.Variables(0).Value() # type: ignore
 
-current_precipitation = current.Variables(1).Value()
+current_precipitation = current.Variables(1).Value() # type: ignore
 
-current_showers = current.Variables(2).Value()
+current_showers = current.Variables(2).Value() # type: ignore
 
-current_wind_speed_10m = current.Variables(3).Value()
+current_wind_speed_10m = current.Variables(3).Value() # type: ignore
 
-current_wind_direction_10m = current.Variables(4).Value()
+current_wind_direction_10m = current.Variables(4).Value() # type: ignore
 
-current_rain = current.Variables(5).Value()
+current_rain = current.Variables(5).Value() # type: ignore
 
-current_snowfall = current.Variables(6).Value()
+current_snowfall = current.Variables(6).Value() # type: ignore
 
-current_weather_code = current.Variables(7).Value()
+current_weather_code = current.Variables(7).Value() # type: ignore
 lat = response.Latitude()
 lon = response.Longitude()
 # print(f"Current time {current.Time()}")
 
 hourly = response.Hourly()
-hourly_temperature_2m = hourly.Variables(0).ValuesAsNumpy()
-hourly_rain = hourly.Variables(1).ValuesAsNumpy()
-hourly_precipitation = hourly.Variables(2).ValuesAsNumpy()
-hourly_wind_speed_10m = hourly.Variables(3).ValuesAsNumpy()
-hourly_precipitation_probability = hourly.Variables(4).ValuesAsNumpy()
-hourly_weather_code = hourly.Variables(5).ValuesAsNumpy()
-hourly_showers = hourly.Variables(6).ValuesAsNumpy()
-hourly_snowfall = hourly.Variables(7).ValuesAsNumpy()
-hourly_snow_depth = hourly.Variables(8).ValuesAsNumpy()
-hourly_cloud_cover = hourly.Variables(9).ValuesAsNumpy()
-hourly_visibility = hourly.Variables(10).ValuesAsNumpy()
-hourly_wind_direction_10m = hourly.Variables(11).ValuesAsNumpy()
+hourly_temperature_2m = hourly.Variables(0).ValuesAsNumpy() # type: ignore
+hourly_rain = hourly.Variables(1).ValuesAsNumpy() # type: ignore
+hourly_precipitation = hourly.Variables(2).ValuesAsNumpy() # type: ignore
+hourly_wind_speed_10m = hourly.Variables(3).ValuesAsNumpy() # type: ignore
+hourly_precipitation_probability = hourly.Variables(4).ValuesAsNumpy() # type: ignore
+hourly_weather_code = hourly.Variables(5).ValuesAsNumpy() # type: ignore
+hourly_showers = hourly.Variables(6).ValuesAsNumpy() # type: ignore
+hourly_snowfall = hourly.Variables(7).ValuesAsNumpy() # type: ignore
+hourly_snow_depth = hourly.Variables(8).ValuesAsNumpy() # type: ignore
+hourly_cloud_cover = hourly.Variables(9).ValuesAsNumpy() # type: ignore
+hourly_visibility = hourly.Variables(10).ValuesAsNumpy() # type: ignore
+hourly_wind_direction_10m = hourly.Variables(11).ValuesAsNumpy() # type: ignore
 
 hourly_data = {}
 hourly_data["temperature_2m"] = hourly_temperature_2m
@@ -91,11 +91,24 @@ hourly_data["visibility"] = hourly_visibility
 hourly_data["wind_direction_10m"] = hourly_wind_direction_10m
 
 hourly_data = {"date": pd.date_range(
-	start = pd.to_datetime(hourly.Time(), unit = "s", utc = True),
-	end = pd.to_datetime(hourly.TimeEnd(), unit = "s", utc = True),
-	freq = pd.Timedelta(seconds = hourly.Interval()),
+	start = pd.to_datetime(hourly.Time(), unit = "s", utc = True), # type: ignore
+	end = pd.to_datetime(hourly.TimeEnd(), unit = "s", utc = True), # type: ignore
+	freq = pd.Timedelta(seconds = hourly.Interval()), # type: ignore
 	inclusive = "left"
-)}
+),
+    "temperature_2m": hourly_temperature_2m,
+    "rain": hourly_rain,
+    "precipitation": hourly_precipitation,
+    "wind_speed_10m": hourly_wind_speed_10m,
+    "precipitation_probability": hourly_precipitation_probability,
+    "weather_code": hourly_weather_code,
+    "showers": hourly_showers,
+    "snowfall": hourly_snowfall,
+    "snow_depth": hourly_snow_depth,
+    "cloud_cover": hourly_cloud_cover,
+    "visibility": hourly_visibility,
+    "wind_direction_10m": hourly_wind_direction_10m
+}
 
 hourly_dataframe = pd.DataFrame(data = hourly_data)
 
@@ -311,11 +324,11 @@ def send_monthly_avg_temps(start_date, end_date):
     print(f"Calculating monthly temp averages between {start_date} and {end_date}")
 
     # extract month from the timestamp
-    data_df['year'] = data_df['time'].dt.year
+    data_df['year'] = data_df['time'].dt.year # type: ignore
     data_df['month'] = data_df['time'].dt.month # type: ignore
 
     # group by both year and month and calculate means
-    avg_monthly_data = data_df.groupby(['year', 'month']).agg({
+    avg_monthly_data = data_df.groupby(['year', 'month']).agg({ # type: ignore
         'temperature': 'mean',
         'rain': 'mean',
         'wind': 'mean'
@@ -377,7 +390,7 @@ def sendHourlyData():
     now = datetime.now(timezone.utc)
 
     # Filter rows where date is after current time
-    filtered_df = hourly_dataframe[hourly_dataframe["date"] > now]
+    filtered_df = hourly_dataframe[hourly_dataframe["date"] > now].copy()
 
     # Convert to ISO string for JSON
     filtered_df["date"] = filtered_df["date"].dt.strftime('%Y-%m-%dT%H:%M:%SZ')

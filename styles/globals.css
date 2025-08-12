@@ -1,3 +1,101 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer{
+    /* clear */
+    .wc-0{
+        background-image: linear-gradient(#fb923c, #facc15);
+    }
+
+    /* Mostly clear */
+    .wc-1{
+        background-image: linear-gradient(#fb923c, #3caffb);
+    }
+
+    /* partly cloudy */
+    .wc-2{
+        background-image: linear-gradient(#ffd919, #ffe667 ,#b9b9b9);
+    }
+
+    /* overcast */
+    .wc-3{
+        background-image: linear-gradient(#828282, #b9b9b9);
+    }
+
+    /* fog */
+    .wc-45{
+        background-image: linear-gradient(#c6c6c6, #a1a1a1 ,#dfdfdf);
+    }
+
+    /* icy fog */
+    .wc-45{
+        background-image: linear-gradient(#c7fff8, #a1a1a1 ,#dfdfdf);
+    }
+
+    /* light drizzle */
+    .wc-51{
+        background-image: linear-gradient(#a5fcff, #eeeeee);
+    }
+
+    /* drizzle */
+    .wc-53{
+        background-image: linear-gradient(#6deeff, #eeeeee);
+    }
+
+    /* heavy drizzle */
+    .wc-55{
+        background-image: linear-gradient(#6db1ff, #c7c7c7);
+    }
+
+    /* light freezing drizzle */
+    .wc-56{
+        background-image: linear-gradient(#269dec, #2571ff);
+    }
+
+    /* freezing drizzle */
+    .wc-57{
+        background-image: linear-gradient(#29a9ff, #0059ff);
+    }
+
+    /* light rain */
+    .wc-61{
+        background-image: linear-gradient(#6db1ff, #a8a8a8);
+    }
+
+    /* rain */
+    .wc-63{
+        background-image: linear-gradient(#3caffb, #0059ff);
+    }
+
+    /* heavy rain */
+    .wc-65{
+        background-image: linear-gradient(#2aa9fd, #004fe2);
+    }
+
+    /* light freezing rain */
+    .wc-66{
+        background-image: linear-gradient(#2494df, #0059ff);
+    }
+
+    /* freezing rain */
+    .wc-67{
+        background-image: linear-gradient(#159ffc, #0046c9);
+    }
+
+    /* snow */
+    .wc-73{
+        background-image: linear-gradient(#ffffff, #ececec);
+    }
+
+    /* light showers */
+    .wc-80{
+        background-image: linear-gradient(#225fd1, #0f63ff);
+    }
+
+    /* showers */
+    .wc-81{
+        background-image: linear-gradient(#004ad4, #0059ff);
+    }
+
+}
